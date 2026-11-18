@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <title>Matrice LED</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="container">
+
+  <header>
+    <h2>LED Matrix</h2>
+    <span id="status" class="status" title="Connexion à la matrice"></span>
+  </header>
+
+  <!-- ===================== ACCUEIL ===================== -->
+  <section id="view-home" class="view">
+    <div class="grid">
+      <button class="card" data-category="effect">
+        <span class="icon">✨</span><span class="name">Animations</span>
+      </button>
+      <button class="card" data-category="game">
+        <span class="icon">🎮</span><span class="name">Jeux</span>
+      </button>
+      <button class="card wide" id="open-live">
+        <span class="icon">📺</span><span class="name">Direct</span>
+      </button>
+    </div>
+
+    <div class="slider">
+      <label for="bright">Luminosité : <span id="bright-val"></span></label>
+      <input type="range" id="bright" min="5" max="255">
+    </div>
+  </section>
+
+  <!-- ===================== LISTE ===================== -->
+  <section id="view-list" class="view" hidden>
+    <h3 id="list-title"></h3>
+    <div id="cards" class="grid"></div>
+
+    <div class="slider" id="speed-box">
+      <label for="speed">Vitesse : <span id="speed-val"></span> ms</label>
+      <input type="range" id="speed" min="10" max="500">
+    </div>
+
+    <button class="back">← Retour</button>
+  </section>
+
+  <!-- ===================== SNAKE ===================== -->
+  <section id="view-snake" class="view" hidden>
+    <h3>🐍 Snake</h3>
+    <p class="score" id="snake-score"></p>
+
+    <div id="snake-zone" class="pad">
+      <span>Glisse ton doigt (▲ ▼ ◀ ▶)<br><small>ou flèches du clavier</small></span>
+    </div>
+
+    <div class="dpad">
+      <button data-dir="u" class="up">▲</button>
+      <button data-dir="l" class="left">◀</button>
+      <button data-dir="r" class="right">▶</button>
+      <button data-dir="d" class="down">▼</button>
+    </div>
+
+    <button class="back">← Retour</button>
+  </section>
+
+  <!-- ===================== PONG ===================== -->
+  <section id="view-pong" class="view" hidden>
+    <h3>🏓 Pong</h3>
+    <p id="pong-role" class="role"></p>
+    <p class="score" id="pong-score"></p>
+
+    <div id="pong-zone" class="pad pong">
+      <span>Glisse horizontalement (◀ ▶)<br><small>ou flèches ← →</small></span>
+    </div>
+
+    <button class="back">← Retour</button>
+  </section>
+
+  <!-- ===================== BLOCS ===================== -->
+  <section id="view-blocks" class="view" hidden>
+    <h3>🧱 Blocs</h3>
+    <p class="score" id="blocks-score"></p>
+
+    <div id="blocks-zone" class="pad blocks">
+      <span>Touche : tourner · Glisse ◀ ▶ : déplacer<br>Glisse ▼ : lâcher la pièce<br>
+        <small>clavier : ← → déplacer, ↑ tourner, ↓ descendre, espace lâcher</small></span>
+    </div>
+
+    <div class="buttons">
+      <button data-blocks="l">◀</button>
+      <button data-blocks="rot">⟳</button>
+      <button data-blocks="r">▶</button>
+      <button data-blocks="down">▼</button>
+      <button data-blocks="drop">⤓</button>
+    </div>
+
+    <button class="back">← Retour</button>
+  </section>
+
+  <!-- ===================== INVASION ===================== -->
+  <section id="view-invasion" class="view" hidden>
+    <h3>👾 Invasion</h3>
+    <p class="score" id="invasion-score"></p>
+
+    <div id="invasion-zone" class="pad invasion">
+      <span>Glisse ◀ ▶ pour viser, touche pour tirer<br><small>clavier : ← → et espace</small></span>
+    </div>
+    <button id="invasion-fire" class="fire">🔥 Tirer</button>
+
+    <button class="back">← Retour</button>
+  </section>
+
+  <!-- ===================== ENVOL ===================== -->
+  <section id="view-flyer" class="view" hidden>
+    <h3>🐦 Envol</h3>
+    <p class="score" id="flyer-score"></p>
+
+    <div id="flyer-zone" class="pad flyer">
+      <span>Touche pour battre des ailes<br><small>clavier : espace ou ↑</small></span>
+    </div>
+
+    <button class="back">← Retour</button>
+  </section>
+
+  <!-- ===================== DIRECT ===================== -->
+  <section id="view-live" class="view" hidden>
+    <h3>📺 Direct</h3>
+
+    <div class="tabs">
+      <button data-tab="camera">📷 Caméra</button>
+      <button data-tab="draw">🎨 Dessin</button>
+      <button data-tab="image">🖼️ Image</button>
+    </div>
+
+    <div id="tab-camera" class="tab">
+      <div id="camera-warning" class="warning" hidden>
+        <p><b>Le navigateur bloque la caméra</b> car la page n'est pas en HTTPS.</p>
+        <p>Sur Chrome (Android / PC) : ouvre
+          <code>chrome://flags/#unsafely-treat-insecure-origin-as-secure</code>,
+          ajoute <code id="origin-hint"></code>, active l'option puis relance Chrome.</p>
+        <p>Sinon, les onglets <b>Dessin</b> et <b>Image</b> fonctionnent partout.</p>
+      </div>
+      <div class="camera-box"><video id="webcam" autoplay playsinline muted></video></div>
+      <button id="flip-camera" class="secondary">🔄 Changer de caméra</button>
+    </div>
+
+    <div id="tab-draw" class="tab" hidden>
+      <div class="tools">
+        <input type="color" id="draw-color" value="#ff0040" title="Couleur">
+        <button id="draw-eraser" class="secondary">🧽 Gomme</button>
+        <button id="draw-fill" class="secondary">🪣 Remplir</button>
+        <button id="draw-clear" class="secondary">🗑️ Effacer</button>
+      </div>
+      <p class="hint">Dessine directement sur l'aperçu ci-dessous.</p>
+    </div>
+
+    <div id="tab-image" class="tab" hidden>
+      <label class="file">
+        📂 Choisir une image
+        <input type="file" id="image-file" accept="image/*" hidden>
+      </label>
+    </div>
+
+    <div id="preview" class="matrix" title="Aperçu de la matrice"></div>
+
+    <button class="back">← Quitter le direct</button>
+  </section>
+
+</main>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>

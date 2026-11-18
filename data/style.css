@@ -1,0 +1,160 @@
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px 10px;
+  background: #121212;
+  color: #fff;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+  max-width: 450px;
+  margin: auto;
+  padding: 20px;
+  background: #1e1e1e;
+  border-radius: 12px;
+}
+
+header { display: flex; align-items: center; justify-content: center; gap: 10px; }
+header h2 { margin: 0 0 10px; }
+
+/* Pastille de connexion */
+.status {
+  width: 12px; height: 12px; margin-bottom: 8px;
+  border-radius: 50%;
+  background: #e53935;
+  box-shadow: 0 0 6px #e53935;
+}
+.status.online { background: #4caf50; box-shadow: 0 0 6px #4caf50; }
+
+/* ---------- Boutons ---------- */
+button {
+  display: block; width: 100%;
+  padding: 12px; margin: 8px 0;
+  font-size: 1.05rem; font-weight: bold;
+  background: #4caf50; color: #fff;
+  border: none; border-radius: 8px;
+  cursor: pointer;
+}
+button:hover { filter: brightness(1.1); }
+button.back { background: #555; margin-top: 18px; }
+button.secondary { background: #3a3a3a; }
+button.secondary.active { background: #ff9800; }
+
+/* ---------- Cartes ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 10px 0;
+}
+.card {
+  margin: 0;
+  background: #2a2a2a;
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 18px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+.card:active { transform: scale(0.95); background: #333; }
+.card.wide { grid-column: span 2; }
+.card.active { border-color: #4caf50; background: #24331f; }
+.card .icon { display: block; font-size: 2.4rem; margin-bottom: 6px; }
+.card .name { font-size: 1rem; }
+
+/* ---------- Curseurs ---------- */
+.slider { margin-top: 20px; padding-top: 12px; border-top: 1px solid #333; }
+.slider label { display: block; margin-bottom: 8px; }
+input[type=range] { width: 100%; cursor: pointer; accent-color: #4caf50; }
+
+/* ---------- Jeux ---------- */
+.score { font-size: 1.3rem; min-height: 1.5em; margin: 6px 0; }
+.role { color: #ff9800; font-weight: bold; min-height: 1.2em; }
+
+.pad {
+  height: 50vh;
+  display: flex; align-items: center; justify-content: center;
+  background: #2a2a2a;
+  border: 2px dashed #4caf50;
+  border-radius: 12px;
+  color: #888; font-size: 1.1rem;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.pad.pong { border-color: #ff9800; }
+.pad.blocks { border-color: #ab47bc; }
+.pad.invasion { border-color: #e53935; height: 180px; }
+.pad.flyer { border-color: #fdd835; }
+
+.buttons { display: flex; gap: 6px; margin-top: 12px; }
+.buttons button { margin: 0; padding: 14px 0; font-size: 1.3rem; background: #3a3a3a; }
+button.fire { background: #e53935; padding: 18px; font-size: 1.3rem; margin-top: 12px; }
+.pad.touching { background: #333; }
+
+.dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-template-areas: ". up ." "left . right" ". down .";
+  gap: 6px;
+  justify-content: center;
+  margin-top: 12px;
+}
+.dpad button { margin: 0; padding: 14px 0; background: #3a3a3a; }
+.dpad .up { grid-area: up; }
+.dpad .down { grid-area: down; }
+.dpad .left { grid-area: left; }
+.dpad .right { grid-area: right; }
+
+/* ---------- Direct ---------- */
+.tabs { display: flex; gap: 6px; }
+.tabs button { margin: 0 0 12px; padding: 10px 4px; font-size: 0.95rem; background: #3a3a3a; }
+.tabs button.active { background: #4caf50; }
+
+.camera-box {
+  width: 180px; aspect-ratio: 9 / 10;
+  margin: auto; overflow: hidden;
+  border-radius: 8px; background: #000;
+}
+.camera-box video { width: 100%; height: 100%; object-fit: cover; }
+
+.warning {
+  text-align: left; font-size: 0.9rem;
+  background: #3b2a12; border: 1px solid #ff9800; border-radius: 8px;
+  padding: 4px 12px; margin-bottom: 12px;
+}
+.warning code { word-break: break-all; color: #ffcc80; }
+
+.tools { display: flex; gap: 6px; align-items: center; }
+.tools button { margin: 0; padding: 10px 4px; font-size: 0.9rem; }
+.tools input[type=color] { width: 54px; height: 42px; border: none; background: none; padding: 0; }
+
+.file {
+  display: block; padding: 14px; border-radius: 8px;
+  background: #3a3a3a; font-weight: bold; cursor: pointer;
+}
+.hint { color: #888; font-size: 0.85rem; }
+
+/* Aperçu de la matrice : une case = une LED */
+.matrix {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 4px;
+  width: 100%; max-width: 300px; aspect-ratio: 9 / 10;
+  margin: 16px auto 0; padding: 8px;
+  background: #000; border-radius: 10px;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.matrix div { border-radius: 50%; background: #000; box-shadow: inset 0 0 0 1px #222; }
+.matrix.drawing { cursor: crosshair; outline: 2px dashed #4caf50; }
+
+/* ---------- Notification ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  max-width: 90%; padding: 12px 18px;
+  background: #333; border: 1px solid #555; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
